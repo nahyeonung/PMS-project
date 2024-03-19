@@ -9,13 +9,13 @@
       <Script rule_version="1.02"/>
       <GeneratorInfo rule_version="1.3"/>
     </Rule>
-    <Info project="E:\hackathon\pmsPrj\src\main\frontend\" generated="E:\hackathon\pmsPrj\src\main\webapp\nexacro\">
-      <File url="typedefinition.xml" checksum="20240318152546" errormsg=""/>
-      <File url="appvariables.xml" checksum="20240318152546" errormsg=""/>
-      <File url="environment.xml" checksum="20240318152546" errormsg=""/>
-      <File url="_resource_\_theme_\blue\theme.xcss" checksum="20240318152546" errormsg=""/>
-      <File url="Application_Desktop.xadl" checksum="20240318152546" errormsg=""/>
-      <File url="FrameBase\Form_Work.xfdl" checksum="20240318153628" errormsg=""/>
+    <Info project="C:\PMS\PMS-project\src\main\frontend\" generated="C:\Users\YUNJINHO\Documents\TOBESOFT\Nexacro N\outputs\frontend\">
+      <File url="typedefinition.xml" checksum="20240319092449" errormsg=""/>
+      <File url="appvariables.xml" checksum="20240319092449" errormsg=""/>
+      <File url="environment.xml" checksum="20240319092449" errormsg=""/>
+      <File url="_resource_\_theme_\blue\theme.xcss" checksum="20240319092449" errormsg=""/>
+      <File url="Application_Desktop.xadl" checksum="20240319092449" errormsg=""/>
+      <File url="FrameBase\Form_Work.xfdl" checksum="20240319092449" errormsg=""/>
       <File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\framework\Framework.json" checksum="20231215111948" errormsg=""/>
       <File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\resources\Resource.json" checksum="20231215111948" errormsg=""/>
       <File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\component\CompBase.json" checksum="20231215111944" errormsg=""/>
@@ -24,6 +24,7 @@
       <File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\component\ListView.json" checksum="20231215111948" errormsg=""/>
       <File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\component\DeviceAPI.json" checksum="20231215111946" errormsg=""/>
       <File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\component\MobileComp.json" checksum="20231215111950" errormsg=""/>
+      <File url="FrameBase\nexa.xfdl" checksum="20240319092449" errormsg=""/>
     </Info>
   </GenInfo>
 </root>
