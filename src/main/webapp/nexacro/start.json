@@ -36,7 +36,11 @@
         	"launch":"./Application_Desktop.xadl.js",
         	"quickview":"./Application_Desktop.xadl.quickview.js",
         	"form":[
-        				"./FrameBase/Form_Work.xfdl.js"
+        				"./Frame/frmTop.xfdl.js",
+        		"./Frame/frmLeft.xfdl.js",
+        		"./Frame/frmMdi.xfdl.js",
+        		"./Frame/frmBottom.xfdl.js",
+        		"./Frame/frmLogin.xfdl.js"
         	]
         }
         ],  

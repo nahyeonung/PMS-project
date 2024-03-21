@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frmMdi" width="1090" height="300" titletext="New Form">
+    <Layouts>
+      <Layout height="300" width="1090">
+        <Div id="Div00" taborder="0" text="Div00" left="0" top="0" width="100%" height="100%" background="gray"/>
+      </Layout>
+    </Layouts>
+  </Form>
+</FDL>
