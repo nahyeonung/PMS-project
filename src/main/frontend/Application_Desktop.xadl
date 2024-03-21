@@ -1,10 +1,53 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ADL version="2.0">
-  <Application id="Application_Desktop" screenid="Desktop_screen">
+  <Application id="Application_Desktop" screenid="Desktop_screen" onload="Application_onload">
     <Layout>
-      <MainFrame id="mainframe" showtitlebar="true" showstatusbar="true" left="0" top="0" width="1280" height="720" titletext="FullFrame">
-        <ChildFrame id="WorkFrame" showtitlebar="false" showstatusbar="false" formurl="FrameBase::Form_Work.xfdl"/>
+      <MainFrame id="mainframe" showtitlebar="true" showstatusbar="true" left="0" top="0" width="1280" height="720">
+        <VFrameSet id="VFSet01" separatesize="0,0,0,*" showtitlebar="true">
+          <Frames>
+            <ChildFrame id="TopFrame" formurl="Frame::frmTop.xfdl" showtitlebar="false"/>
+            <HFrameSet id="HFSet01" separatesize="190,*">
+              <Frames>
+                <ChildFrame id="LeftFrame" formurl="Frame::frmLeft.xfdl" showtitlebar="false"/>
+                <VFrameSet id="VFSet02" separatesize="40,*">
+                  <Frames>
+                    <ChildFrame id="MdiFrame" formurl="Frame::frmMdi.xfdl" showtitlebar="false"/>
+                    <FrameSet id="WorkFrame"/>
+                  </Frames>
+                </VFrameSet>
+              </Frames>
+            </HFrameSet>
+            <ChildFrame id="BottomFrame" formurl="Frame::frmBottom.xfdl" showtitlebar="false"/>
+            <ChildFrame id="LoginFrame" formurl="Frame::frmLogin.xfdl" showtitlebar="false"/>
+          </Frames>
+        </VFrameSet>
       </MainFrame>
     </Layout>
+    <Style url="xcssrc::temp_main.xcss"/>
   </Application>
+  <Script type="xscript5.1"><![CDATA[this.Application_onload = function(obj:nexacro.Application,e:nexacro.LoadEventInfo)
+{
+  //공통 FrameSet/Frame에 직접접근을 위한 변수 선언
+  
+  //메인프레인 안에 첫 번째 VFrameSet
+  nexacro.VFSet01 = this.mainframe.VFSet01;
+  
+  //VFSet01 안에 TopFrame
+  nexacro.TopFrame = this.mainframe.VFSet01.TopFrame;
+  
+  //VFSet01 안에 HFSet01
+  nexacro.HFSet01 = this.mainframe.VFSet01.HFSet01;
+  //HFSet01 안에 LeftFrame
+  nexacro.LeftFrame = this.mainframe.VFSet01.HFSet01.LeftFrame;
+  
+  //HFSet01 안에 VFSet02
+  nexacro.VFSet02 = this.mainframe.VFSet01.HFSet01.VFSet02;  
+  
+  //VFSet02 안에 MdiFrame
+  nexacro.MdiFrame = this.mainframe.VFSet01.HFSet01.VFSet02.MdiFrame;
+  
+  //VFSet02 안에 WorkFrame
+  nexacro.WorkFrame = this.mainframe.VFSet01.HFSet01.VFSet02.WorkFrame;
+
+};]]></Script>
 </ADL>
