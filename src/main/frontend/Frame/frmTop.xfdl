@@ -5,7 +5,7 @@
       <Layout height="65" width="1280">
         <Static id="staBack02" taborder="3" top="0" cssclass="sta_top_bg02" left="0" bottom="0" width="100%" text=""/>
         <Static id="staBack01" taborder="2" top="0" height="24" cssclass="sta_top_bg01" width="100%" left="0"/>
-        <Static id="staHello" taborder="0" text="Hello! Nahyeonung" left="10" top="0" width="210" height="24" cssclass="sta_top_textWht"/>
+        <Static id="staHello" taborder="0" text="안녕 나는 해수스나바스" left="10" top="0" width="210" height="24" cssclass="sta_top_textWht"/>
         <Static id="staLogo" taborder="1" text="" left="0" top="24" width="160" height="41" cssclass="sta_top_logo"/>
       </Layout>
     </Layouts>

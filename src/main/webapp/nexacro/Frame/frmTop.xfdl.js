@@ -35,7 +35,7 @@
 
             obj = new Static("staHello","10","0","210","24",null,null,null,null,null,null,this);
             obj.set_taborder("0");
-            obj.set_text("Hello! Nahyeonung");
+            obj.set_text("안녕 나는 해수스나바스");
             obj.set_cssclass("sta_top_textWht");
             this.addChild(obj.name, obj);
 
