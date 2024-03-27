@@ -22,12 +22,13 @@
             this.addChild(obj.name, obj);
             
             // UI Components Initialize
-            obj = new Static("staBack02","0","0",null,null,"0","0",null,null,null,null,this);
+            obj = new Static("staBack02","0","0","100%",null,null,"0",null,null,null,null,this);
             obj.set_taborder("3");
             obj.set_cssclass("sta_top_bg02");
+            obj.set_text("");
             this.addChild(obj.name, obj);
 
-            obj = new Static("staBack01",null,"0","1280","24","0",null,null,null,null,null,this);
+            obj = new Static("staBack01","0","0","100%","24",null,null,null,null,null,null,this);
             obj.set_taborder("2");
             obj.set_cssclass("sta_top_bg01");
             this.addChild(obj.name, obj);
