@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="sample05" width="1280" height="720" titletext="New Form" onload="sample05_onload">
+    <Layouts>
+      <Layout height="720" width="1280">
+        <Div id="titleDiv" taborder="0" text="" left="0" top="0" height="40" color="#c9c9c9" background="#c9c9c9" right="0" border="0px none, 0px none, 1px solid">
+          <Layouts>
+            <Layout>
+              <Static id="Static00" taborder="0" text="나의경력조회" left="17" top="0" width="126" height="40" font="bold 18px/normal &quot;Arial&quot;,&quot;Malgun Gothic&quot;,&quot;Gulim&quot;" textAlign="center"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="Div00" taborder="1" text="" left="0" top="40" background="white" right="0" height="100%">
+          <Layouts>
+            <Layout>
+              <Div id="Div00" taborder="0" text="" left="92" top="35" width="1097" height="98" border="1px solid">
+                <Layouts>
+                  <Layout>
+                    <Div id="Div00" taborder="0" text="" left="0" top="0" height="29" border="0px none, 0px none, 1px solid" right="0" background="#efefef">
+                      <Layouts>
+                        <Layout>
+                          <Static id="Static00" taborder="0" text="기본 정보" left="16" top="4" width="68" height="21" font="bold 12px/normal &quot;Arial&quot;,&quot;Malgun Gothic&quot;,&quot;Gulim&quot;"/>
+                        </Layout>
+                      </Layouts>
+                    </Div>
+                    <Grid id="Grid00" taborder="1" left="0" top="29" height="67" right="0" binddataset="my_info" autofittype="col">
+                      <Formats>
+                        <Format id="default">
+                          <Columns>
+                            <Column size="80"/>
+                            <Column size="80"/>
+                            <Column size="80"/>
+                            <Column size="80"/>
+                            <Column size="80"/>
+                          </Columns>
+                          <Rows>
+                            <Row band="head" size="24"/>
+                            <Row size="24"/>
+                          </Rows>
+                          <Band id="head">
+                            <Cell text="name"/>
+                            <Cell col="1" text="dept"/>
+                            <Cell col="2" text="rank"/>
+                            <Cell col="3" text="division"/>
+                            <Cell col="4" text="license"/>
+                          </Band>
+                          <Band id="body">
+                            <Cell text="bind:name"/>
+                            <Cell col="1" text="bind:dept"/>
+                            <Cell col="2" text="bind:rank"/>
+                            <Cell col="3" text="bind:division"/>
+                            <Cell col="4" text="bind:license"/>
+                          </Band>
+                        </Format>
+                      </Formats>
+                    </Grid>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.sample05_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.myInfoSearch();
+};
+
+//처리콜백 함수
+this.fnCallback = function(svcId, errorCode, errorMsg)
+{
+	//에러 시 화면 처리 내역
+	if(errorCode != 0)
+	{
+		this.alert(errorCode+"\n"+errorMsg);
+		return;
+	}
+	  switch(svcID)
+	  {
+		case "search":
+			this.alert("test", this.my_info.rowcount);
+		  if(this.my_info.rowcount < 1){
+			this.alert("조회된 결과가 없습니다.");
+		  }
+
+		  break;
+	  }
+}
+
+//내 정보 조회 함수
+this.myInfoSearch = function () 
+{
+	this.alert("왔습니데이");
+	var strSvcId = "search";
+	var strSvcUrl = "svc::selectMemberInfo.do";
+	var inData = "input1=ds_search";
+	var outData = "my_info=output1";
+	var strArg = "";
+	var callBackFnc = "fnCallback";
+	var isAsync = true;
+	
+	this.transaction(strSvcId ,
+		strSvcUrl ,
+		inData ,
+		outData ,
+		strArg ,
+		callBackFnc ,
+		isAsync);
+}]]></Script>
+    <Objects>
+      <Dataset id="my_info">
+        <ColumnInfo>
+          <Column id="name" type="STRING" size="256"/>
+          <Column id="dept" type="INT" size="256"/>
+          <Column id="rank" type="INT" size="256"/>
+          <Column id="division" type="INT" size="256"/>
+          <Column id="license" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_search">
+        <ColumnInfo>
+          <Column id="searchType" type="STRING" size="256"/>
+          <Column id="keyword" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

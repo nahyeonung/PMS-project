@@ -1,10 +1,172 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <FDL version="2.1">
-  <Form id="frmMdi" width="1090" height="300" titletext="New Form">
+  <Form id="frmMdi" width="1070" height="40" titletext="New Form" onload="frmMdi_onload">
     <Layouts>
-      <Layout height="300" width="1090">
-        <Div id="Div00" taborder="0" text="Div00" left="0" top="0" width="100%" height="100%" background="gray"/>
+      <Layout height="40" width="1070">
+        <Static id="stabg" taborder="0" left="0" top="0" right="0" bottom="0" cssclass="sta_mdi_bg01"/>
+        <Tab id="tabMdi" taborder="1" tabindex="0" left="0" top="10" height="100" right="30" showextrabutton="true" cssclass="tab_mdi_menu" onextrabuttonclick="tabMdi_onextrabuttonclick" onchanged="tabMdi_onchanged">
+          <Tabpages>
+            <Tabpage id="Tabpage1" text="Tabpage1"/>
+            <Tabpage id="Tabpage2" text="Tabpage2"/>
+          </Tabpages>
+        </Tab>
+        <Button id="closeAll" taborder="2" top="0" bottom="0" right="0" cssclass="btn_mdi_close" width="40" text="" onclick="closeAll_onclick"/>
       </Layout>
     </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.frmMdi_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	//자동 생성된 첫 번째 탭페이지 삭제
+	this.tabMdi.removeTabpage(0);
+};
+
+this.tabMdi_onextrabuttonclick = function(obj:nexacro.Tab,e:nexacro.TabMouseEventInfo)
+{
+  trace("onextrabuttonclick");
+  //선택된 extrabutton(삭제 버튼)의 index == Tabpage index
+  var nExtraIdx = e.index
+
+  //extrabuton의 index로 생성된 메뉴아이디 값
+  var sMenuId = this.tabMdi.tabpages[nExtraIdx].id;
+  
+  //extrabuton의 index로 탭페이지 삭제
+  this.tabMdi.removeTabpage(nExtraIdx);
+  
+  //WorkFram에 생성된 프레임 중 메와 일치하는 프레임의 Form 닫기
+  nexacro.WorkFrame[sMenuId].form.close();
+  
+  //열린 화면 정보 삭제 함수 호출
+  nexacro.LeftFrame.form.fnDelOpenMenu(sMenuId);
+};
+
+this.closeAll_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+  //Tab 컴포넌트에 등록된 TabPage의 개수 반환
+  var nPageCnt = this.tabMdi.getTabpageCount();
+  
+  //Frameset에 등록된 Frame 전체 가져오기
+  var objWorkFrame = nexacro.WorkFrame.all;
+  
+  //application 오브젝트 반환
+  var objApp = nexacro.Application;
+
+ //글로벌 gdsOpenMenu 가져오기 : 열린화면 정보
+  var objDsOpenMenu = objApp.pmsMenuOpen;
+  
+  // 마지막 탭 페이지부터 모두 삭제
+  for(var i = nPageCnt-1; i >= 0; i--)
+  {  
+    // index의 TabPage 삭제
+    this.tabMdi.removeTabpage(i);  
+    
+    // workFrame에 등록된 form 닫기
+    objWorkFrame[i].form.close();
+    
+    // 열린화면 메뉴 row 삭제
+    objDsOpenMenu.deleteRow(i);
+  }  
+};
+
+
+this.fnAddTabPage = function(sMenuId,sMenuNm)
+{
+	//Tab 컴포넌트에서 지정한 위치에 Tabpage 삽입
+	//삽입될 위치를 -1 추가하여 마지막에 추가되도록 함
+	this.tabMdi.insertTabpage(sMenuId, -1, "", sMenuNm);
+}
+
+this.fnActiveTabPage = function (sMenuId)
+{  
+  // Tab 컴포넌트에 등록된 TabPage의 개수 반환
+  var nPageCnt = this.tabMdi.getTabpageCount();
+  
+  // TabPage의 수만큼 반복
+  for(i=0; i<nPageCnt; i++)
+  {    
+    // 메뉴아이디가 일치하는 아이디를 갖는 TabPage 찾기
+    if(this.tabMdi.tabpages[i].id == sMenuId)
+    {
+      //화면에 표시될 TabPage index에 값 설정 후 반복문 종료
+      this.tabMdi.set_tabindex(i);
+      break;
+    }
+  }
+};
+
+this.tabMdi_onchanged = function(obj:nexacro.Tab,e:nexacro.TabIndexChangeEventInfo)
+{
+	//글로벳 데이터셋 gdsOpenMenu 가져오기
+	var objApp = nexacro.getApplication();
+	var objDsOpenMenu = objApp.pmsMenuOpen;
+	
+    //메뉴 데이터셋 가져오기
+	var objDsMenu = nexacro.LeftFrame.form.gridLeftMenu.getBindDataset();
+	var objWorkFrame = nexacro.WorkFrame;
+	
+	var sMenuId = obj._tabbutton_obj._tabpage.id;
+	
+	//오픈할 메뉴 정보 가져오기
+	var nFRow = objDsMenu.findRow("MENU_ID", sMenuId);
+	var sMenuNm = objDsMenu.getColumn(nFRow, "MENU_NM");
+	var sMenuPath = objDsMenu.getColumn(nFRow, "MENU_PATH");
+	
+	//이미 오픈된 메뉴인지 확인
+	var nFRowOpen = objDsOpenMenu.findRow("MENU_ID", sMenuId);
+	
+	if(nFRowOpen > -1)
+	{
+		objWorkFrame[sMenuId].form.setFocus()
+	}
+	else{
+		//업무화면을 구성하기 위한 childframe 생성
+		var objChildFrame = new ChildFrame();
+		objChildFrame.init(sMenuId, 10, 30, 200, 500 ,null, null);
+		
+		//업무화면에 전달할 파라미터 정보
+		var oParam = {menumn : sMenuNm,
+					  menupath : sMenuPath
+					  };
+
+		
+		trace("plz", objWorkFrame[sMenuId]);
+		
+		var pageCnt = this.tabMdi.getTabpageCount();
+		
+		//workframe에 자식으로 추가
+		objWorkFrame.addChild(objChildFrame.name, objChildFrame);
+		
+		//업무 화면용 ChildFrame에 공통 속성 적용
+		objChildFrame.set_openstatus('maximize');
+		objChildFrame.set_showtitlebar('false');
+		objChildFrame.set_formurl(sMenuPath);
+		objChildFrame.param = oParam;
+		objChildFrame.show(); 
+		trace("2");
+		trace("now tab id", obj._tabbutton_obj._tabpage.id);
+		trace("obj._tabbutton_obj", obj._tabbutton_obj);
+		trace("objWorkFrame", objWorkFrame);
+		
+		this.fnAddOpenMenu(sMenuId);
+	}
+	
+	
+	
+	
+	//WorkFram에 생성된 프레임 중 메와 일치하는 프레임의 Form 닫기
+    //nexacro.WorkFrame[sMenuId].form.visible();
+	
+};
+
+this.fnAddOpenMenu = function (sMenuId)
+{
+	//글로벌 데이터셋 gdsOpenMenu 가져오기
+	var objApp = nexacro.Application;
+	var objDsOpenMenu = objApp.pmsMenuOpen;
+	
+	//마지막 row에 새로운 값 추가
+	var nRow = objDsOpenMenu.addRow();
+	objDsOpenMenu.setColumn(nRow, "MENU_ID", sMenuId);
+};
+]]></Script>
   </Form>
 </FDL>

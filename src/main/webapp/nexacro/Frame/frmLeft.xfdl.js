@@ -62,7 +62,6 @@
         
         // User Script
         this.registerScript("frmLeft.xfdl", function() {
-
         this.frmLeft_onload = function(obj,e)
         {
         	//메뉴가져오는 함수 호출
@@ -98,6 +97,7 @@
         	//그리드에 바인딩 된 데이터셋으로 가져오기
         	var objDsMenu = obj.getBindDataset();
         	var sMenuId = objDsMenu.getColumn(e.row, "MENU_ID");
+        	trace("sMenuId : " + sMenuId);
 
         	//업무 화면 여는 함수 호출
         	this.fnOpenMenu(sMenuId);
@@ -110,7 +110,9 @@
         */
         this.fnOpenMenu = function (sMenuId)
         {
+        	//글로벳 데이터셋 gdsOpenMenu 가져오기
         	var objApp = nexacro.getApplication();
+        	var objDsOpenMenu = objApp.pmsMenuOpen;
 
         	//글로벌 변수 MDI Frame, Work FrameSet 가져오기
         	var objMdiFrame = nexacro.MdiFrame;
@@ -119,15 +121,15 @@
         	//메뉴 데이터셋 가져오기
         	var objDsMenu = this.gridLeftMenu.getBindDataset();
 
-        	//글로벳 데이터셋 gdsOpenMenu 가져오기
-        	var objDsOpenMenu = objApp.gdsOpenMenu;
-
         	//오픈할 메뉴 정보 가져오기
+        	trace("nFROW : " + objDsMenu.findRow("MENU_ID", sMenuId));
         	var nFRow = objDsMenu.findRow("MENU_ID", sMenuId);
+        	trace("sMenuNm : " + objDsMenu.getColumn(nFRow, "MENU_NM"));
+        	trace("sMenuPath : " + objDsMenu.getColumn(nFRow, "MENU_PATH"));
         	var sMenuNm = objDsMenu.getColumn(nFRow, "MENU_NM");
         	var sMenuPath = objDsMenu.getColumn(nFRow, "MENU_PATH");
 
-        	//이미 오프된 메뉴인지 확인
+        	//이미 오픈된 메뉴인지 확인
         	var nFRowOpen = objDsOpenMenu.findRow("MENU_ID", sMenuId);
         	var nOpenMenuRowCnt = objDsOpenMenu.rowcount;
 
@@ -151,27 +153,11 @@
         			alert("경로가 존재하지 않습니다.");
         			return;
         		}
-        		//업무화면을 구성하기 위한 childframe 생성
-        		var objChildFrame = new ChildFrame();
-        		objChildFrame.init(sMenuId, 10, 30, 200, 500 ,null, null);
-
-        		//업무화면에 전달할 파라미터 정보
-        		var oParam = {menumn : sMenuNm,
-        					  menupath : sMenuPath
-        					  };
-
-        		//workframe에 자식으로 추가
-        		objWorkFrame.addChild(objChildFrame.name, objChildFrame);
-
-        		//업무 화면용 ChildFrame에 공통 속성 적용
-        		objChildFrame.set_openstatus('maximize');
-        		objChildFrame.set_showtitlebar('false');
-        		objChildFrame.set_formurl("Frame::frmWork.xfdl");
-        		objChildFrame.param = oParam;
-        		objChildFrame.show();
+        		//
+        		//
 
         		//열린화면 데이터셋에 정보 추가 함수 호출
-        		this.fnAddOpenMenu(sMenuId);
+        		//this.fnAddOpenMenu(sMenuId);
 
         		//MDI Frame에 정의된 MDI Tab 추가 함수 호출
         		objMdiFrame.form.fnAddTabPage(sMenuId, sMenuNm);
@@ -187,7 +173,7 @@
         {
         	//글로벌 데이터셋 gdsOpenMenu 가져오기
         	var objApp = nexacro.Application;
-        	var objDsOpenMenu = objApp.gdsOpenMenu;
+        	var objDsOpenMenu = objApp.pmsMenuOpen;
 
         	//마지막 row에 새로운 값 추가
         	var nRow = objDsOpenMenu.addRow();
@@ -204,7 +190,7 @@
         	//글로벌 데이터셋 gdsOpenMenu 가져오기
         	var objApp = nexacro.getApplication();
 
-        	var objDsOpenMenu = objApp.gdsOpenMenu;
+        	var objDsOpenMenu = objApp.pmsMenuOpen;
 
         	//sMenuId로 데이터셋에서 row 찾기
         	var nRow = objDsOpenMenu.findRow("MENU_ID", sMenuId);
@@ -213,6 +199,26 @@
         	objDsOpenMenu.deleteRow(nRow);
         };
 
+
+
+        // //업무화면을 구성하기 위한 childframe 생성
+        // 		var objChildFrame = new ChildFrame();
+        // 		objChildFrame.init(sMenuId, 10, 30, 200, 500 ,null, null);
+        //
+        // 		//업무화면에 전달할 파라미터 정보
+        // 		var oParam = {menumn : sMenuNm,
+        // 					  menupath : sMenuPath
+        // 					  };
+        //
+        // 		//workframe에 자식으로 추가
+        // 		objWorkFrame.addChild(objChildFrame.name, objChildFrame);
+        //
+        // 		//업무 화면용 ChildFrame에 공통 속성 적용
+        // 		objChildFrame.set_openstatus('maximize');
+        // 		objChildFrame.set_showtitlebar('false');
+        // 		objChildFrame.set_formurl(sMenuPath);
+        // 		objChildFrame.param = oParam;
+        // 		objChildFrame.show();
         });
         
         // Regist UI Components Event

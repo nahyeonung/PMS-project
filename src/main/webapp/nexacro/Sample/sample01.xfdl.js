@@ -9,7 +9,7 @@
         
         this.on_create = function()
         {
-            this.set_name("frmLogin");
+            this.set_name("sample01");
             this.set_titletext("New Form");
             if (Form == this.constructor)
             {
@@ -20,13 +20,18 @@
 
             
             // UI Components Initialize
-            obj = new Button("Button00","596","340","88","40",null,null,null,null,null,null,this);
+            obj = new Button("Button00","174","88","206","146",null,null,null,null,null,null,this);
             obj.set_taborder("0");
-            obj.set_text("로그인");
+            obj.set_text("sample1");
             this.addChild(obj.name, obj);
             // Layout Functions
             //-- Default Layout : this
             obj = new Layout("default","",1280,720,this,function(p){});
+            obj.set_horizontalgap("0");
+            obj.set_mobileorientation("landscape");
+            obj.set_spacing("0px");
+            obj.set_tabletemplate("1* / 1*");
+            obj.set_verticalgap("0");
             this.addLayout(obj.name, obj);
             
             // BindItem Information
@@ -42,24 +47,14 @@
         };
         
         // User Script
-        this.registerScript("frmLogin.xfdl", function() {
 
-        this.Button00_onclick = function(obj,e)
-        {
-        	//Top, HFSet01, Bottom, Login 4개 영역에 대하여
-        	//로그인 화면이 보이지 않도록 설정
-        	//VFSet01은 내가 mainframe에 셋팅한 root 프레임의 이름
-        	nexacro.VFSet01.set_separatesize("65,*,30,0");
-        };
-
-        });
         
         // Regist UI Components Event
         this.on_initEvent = function()
         {
-            this.Button00.addEventHandler("onclick",this.Button00_onclick,this);
+
         };
-        this.loadIncludeScript("frmLogin.xfdl");
+        this.loadIncludeScript("sample01.xfdl");
         this.loadPreloadList();
         
         // Remove Reference
