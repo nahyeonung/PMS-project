@@ -1,8 +1,43 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <FDL version="2.1">
-  <Form id="frmWork" width="1280" height="720" titletext="New Form">
+  <Form id="frmWork" width="1080" height="570" titletext="New Form">
     <Layouts>
-      <Layout height="720" width="1280"/>
+      <Layout height="570" width="1080">
+        <Static id="staTitle" taborder="0" text="메뉴명입니다." left="10" top="0" height="35" right="0" cssclass="sta_WF_title01"/>
+        <Div id="divWork" taborder="1" text="Div00" left="0" top="30" right="0" bottom="0"/>
+      </Layout>
     </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.frmWork_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+  //화면 초기화 함수 호출
+  this.fnInitForm();
+};
+
+this.fnInitForm = function ()
+{
+  //현재 form이 소속된 부모 frame 반
+  var objOwnerFrame = this.getOwnerFrame();
+  
+  /*
+  workFrame에 Frame이 생성될 떄 추가된 파라미터 정보 가져오기  
+  (frmLeft form의 fnOpenMenu 함수에서 생성한 Frame에 추가)
+  var objParam  = {menunm : sMenuNm,
+                              menupath : sMenuPath
+                              };
+  */
+  
+  //파라미터 정보 중 메뉴명 가져오기
+  var sPageNm = objOwnerFrame.param.menunm;
+  
+  //파라미터 정보 중 메뉴경로 가져오기
+  var sFormPath= objOwnerFrame.param.menupath;
+  
+  //화면 타이틀 설정
+  this.staTitle.set_text(sPageNm);
+  this.staTitle.set_fittocontents("width");
+  
+  //Div 컴포넌트에 화면 URL을 설정
+  this.divWork.set_url(sFormPath);  
+};]]></Script>
   </Form>
 </FDL>

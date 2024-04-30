@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <TypeDefinition version="3.0">
   <Modules>
     <Module url="CompBase.json"/>
@@ -47,6 +47,8 @@
     <Service prefixid="extlib" type="resource" url="./_extlib_/" version="0" cachelevel="session" include_subdir="true"/>
     <Service prefixid="Base" type="form" url="./Base/" version="0" cachelevel="session" include_subdir="false" communicationversion="0"/>
     <Service prefixid="Frame" type="form" url="./Frame/" version="0" cachelevel="session" include_subdir="false" communicationversion="0"/>
+    <Service prefixid="Sample" type="form" url="./Sample/" version="0" cachelevel="session" include_subdir="false" communicationversion="0"/>
+    <Service prefixid="svc" type="JSP" version="0" cachelevel="none" include_subdir="false" communicationversion="0" url="http://localhost:8080/pmsPrj/"/>
   </Services>
   <Protocols/>
   <DeviceAdaptors/>

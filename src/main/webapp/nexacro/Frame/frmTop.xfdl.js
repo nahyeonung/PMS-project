@@ -66,7 +66,6 @@
 
         this.frmTop_onload = function(obj,e)
         {
-        	nexacro.getApplication().trace("ㄴㅇ미라ㅓㅗ니ㅏ러디람너리ㅏㅓㄴㅁ디;ㄹ");
         	//메뉴 정보 가져오는 함수 호출
         	this.fnGetTopMenu();
 
@@ -81,16 +80,16 @@
         this.fnGetTopMenu = function ()
         {
           //글로벌 데이터셋 gdsMenu 가져옴
-          var objApp = nexacro.getApplication();
-          var objDsMenu = objApp.pmsMenu;
+          var objDsMenu = nexacro.getApplication().pmsMenu;
 
-          //MENU_LVL이 0인 값으로 데이터셋 필터링
+          //MENU_LVL이 0인 값으로 데이터셋 row 데이터들 필터링
           objDsMenu.filter("MENU_LEVEL == 0");
 
           //필터처리된 데이터셋을 복사
           //CopyData 메서드 매개변수에 "true" 설정하여 필터링 된 데이터만 복사
           this.dsTop.copyData(objDsMenu,true);
 
+          //다시 필터하기 전으로 되돌리기
           objDsMenu.filter("");
         };
 
@@ -128,7 +127,11 @@
 
             //새로운 버튼 생성
             var objButton = new Button();
-            objButton.init("btn_"+sMenuId, nLeft, nTop, nWidth, nHeight, null, null);
+            //Button.init( strName, vLeft, vTop , vWidth, vHeight [, vRight, vBottom, [vMinWidth, [vMaxWidth, [vMinHeight, [vMaxHeight]]]]] )
+            //vLeft, vWidth 값을 모두 설정했을 경우 vRight 값은 무시
+        	//vTop, vHeight 값을 모두 설정했을 경우 vBottom 값은 무시
+        	//left, top은 버튼의 위치 | width, height는 버튼의 크기
+        	objButton.init("btn_"+sMenuId, nLeft, nTop, nWidth, nHeight, null, null);
 
             //버튼 컴포넌트 설정
             objButton.set_text(sMenuNm);
@@ -148,6 +151,8 @@
             //두번째 버튼부터는 이전 버튼과 nGap 만큼의 간격으로 생성되도록 Left 값 설정
             //PositionBase
             nLeft = objButton.id+":"+nGap+"px";
+        	trace("aa : " + objButton.id);
+        	trace("bb : " + nLeft);
           }
           this.resetScroll();
         };
@@ -161,7 +166,8 @@
           //ex) btn_000001 -> 000001
           var arrResultId = obj.id.split('_');
           var sResultId = arrResultId [1];
-
+          trace("여기가 왔누");
+          trace(sResultId);
           //왼쪽 메뉴 가져오는 함수 호출 - frmleft 화면
           nexacro.LeftFrame.form.fnGetLeftMenu(sResultId);
         };
