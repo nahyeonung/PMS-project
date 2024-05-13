@@ -4,10 +4,25 @@
 	
 	<!-- 내 정보 조회 -->
 	<select id="selectMemberInfo" resultType="pmsPrj.member.vo.MemberInfoVO">
-      	SELECT member_nm AS name, dept_id AS dept
-      			, member_rank AS rank, member_dv AS division, nvl(license_nm,'정처기') AS license FROM member m 
+      	SELECT member_nm AS name, dept_id AS dept, 
+      			member_rank AS rank, member_dv AS division, nvl(license_nm,'정처기') AS license FROM member m 
 				LEFT JOIN license_mapping lm on m.member_id = lm.member_id
 				LEFT JOIN license l on lm.license_num = l.license_num
+    </select>
+    
+    <!-- 로그인 가능 여부 -->
+    <select id="loginCheck" resultType="boolean">
+    	SELECT count(*)
+    	FROM member
+    	WHERE member_id = #{id} and member_pw = #{pwd}
+    </select>
+    
+    <!-- 로그인 -->
+    <select id="procLogin" parameterType="String" resultType="pmsPrj.member.vo.LoginInfoVO">
+    	SELECT member_id AS id, member_nm AS name,
+    			member_email AS email 
+    	FROM member 
+    	WHERE member_id = #{id}
     </select>
 
 </mapper>

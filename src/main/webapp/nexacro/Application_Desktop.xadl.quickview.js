@@ -98,6 +98,7 @@
         
         this.loadPreloadList();
         this.loadCss("xcssrc::temp_main.xcss");
+        this.loadCss("xcssrc::button.xcss");
         this.loadIncludeScript("Application_Desktop.xadl");
     };
 }

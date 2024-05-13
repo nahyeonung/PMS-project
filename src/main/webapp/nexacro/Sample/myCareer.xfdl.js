@@ -126,7 +126,6 @@
         	  switch(svcID)
         	  {
         		case "search":
-        			this.alert("test", this.my_info.rowcount);
         		  if(this.my_info.rowcount < 1){
         			this.alert("조회된 결과가 없습니다.");
         		  }
@@ -138,7 +137,6 @@
         //내 정보 조회 함수
         this.myInfoSearch = function ()
         {
-        	this.alert("왔습니데이");
         	var strSvcId = "search";
         	var strSvcUrl = "svc::selectMemberInfo.do";
         	var inData = "input1=ds_search";
